@@ -17,12 +17,15 @@ public class NetUtil {
         if (connManager != null) {
             networkInfo = connManager.getActiveNetworkInfo();
         }
+//        判断是否无网络
         if (networkInfo == null){
             return NETWORN_NONE;
         }
         int nType = networkInfo.getType();
+//        判断是否有手机移动网络
         if (nType == ConnectivityManager.TYPE_MOBILE){
             return NETWORN_MOBILE;
+//            判断是否有WiFi网络
         }else if (nType == ConnectivityManager.TYPE_WIFI){
             return NETWORN_WIFI;
         }

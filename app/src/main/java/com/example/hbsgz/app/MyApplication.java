@@ -20,6 +20,7 @@ public class MyApplication extends Application{
     private static MyApplication mApplication;
     private CityDB mCityDB;
     private List<City> mCityList;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,19 +29,23 @@ public class MyApplication extends Application{
         initCityList();
     }
 
+//    初始化CityList
     private void initCityList(){
         mCityList = new ArrayList<City>();
         new Thread(new Runnable() {
             @Override
             public void run() {
+//                开辟子线程，准备数据
                 prepareCityList();
             }
         }).start();
     }
 
+//    准备数据,从数据库中得到数据
     private boolean prepareCityList(){
         mCityList = mCityDB.getAllCity();
         int i = 0;
+//        遍历mCityList
         for(City city : mCityList){
             i++;
             String cityName = city.getCity();
@@ -50,13 +55,14 @@ public class MyApplication extends Application{
         return true;
     }
 
+//获取城市信息
     public List<City> getCityList() {
-        mCityList = mCityDB.getAllCity();
-        int i = 0;
-        for(City city : mCityList) {
-            i++;
-            Log.d("111111111111111111", city.getCity()+"111111111111111111111111111111111111111111111111111111111111");
-        }
+//        mCityList = mCityDB.getAllCity();
+//        int i = 0;
+//        for(City city : mCityList) {
+//            i++;
+//            Log.d("111111111111111111", city.getCity()+"111111111111111111111111111111111111111111111111111111111111");
+//        }
         return mCityList;
     }
 
@@ -64,6 +70,7 @@ public class MyApplication extends Application{
         return mApplication;
     }
 
+//    打开数据库接口
     private CityDB openCityDB() {
         String path = "/data"
                 + Environment.getDataDirectory().getAbsolutePath ()
@@ -71,6 +78,7 @@ public class MyApplication extends Application{
                 + File.separator + "databases1"
                 + File.separator + CityDB.CITY_DB_NAME;
         File db = new File(path);
+//        判断文件是否存在,不存在则创建文件
         if (!db.exists()) {
             String pathfolder = "/data"
                     + Environment.getDataDirectory().getAbsolutePath()
@@ -83,7 +91,9 @@ public class MyApplication extends Application{
             }
 //                Log.i("MyApp","db is not exists");
             try {
+//                打开数据库,输入流读数据
                 InputStream is = getAssets().open("city.db");
+//                文件输出流将数据输出到创建的文件中
                 FileOutputStream fos = new FileOutputStream(db);
                 int len = -1;
                 byte[] buffer = new byte[1024];

@@ -8,6 +8,7 @@ public class City {
     private String allPY;
     private String allFristPY;
 
+//    实现构造函数
     public City(String province, String city, String number, String firstPY, String allPY, String allFristPY) {
         this.province = province;
         this.city = city;
